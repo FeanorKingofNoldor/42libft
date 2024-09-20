@@ -1,5 +1,4 @@
 NAME = libft.a
-BONUS_NAME = libft_bonus.a
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -24,7 +23,13 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
-bonus: $(BONUS_NAME)
+BONUS_FLAG = .bonus
+
+$(BONUS_FLAG) : $(BONUS_O)
+				ar rcs $(NAME) $(BONUS_O)
+				@touch $(BONUS_FLAG)
+
+bonus: $(NAME) $(BONUS_FLAG)
 
 $(BONUS_NAME): $(OBJS) $(BONUS_OBJS)
 	ar rcs $(BONUS_NAME) $(OBJS) $(BONUS_OBJS)
@@ -33,10 +38,10 @@ $(BONUS_NAME): $(OBJS) $(BONUS_OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(BONUS_OBJS)
+	rm -f $(OBJS) $(BONUS_O) $(BONUS_FLAG) 
 
 fclean: clean
-	rm -f $(NAME) $(BONUS_NAME)
+	rm -f $(NAME) $(BONUS_O) $(BONUS_NAME) $(BONUS_FLAG) 
 
 re: fclean all
 
